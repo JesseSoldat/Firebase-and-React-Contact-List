@@ -14,6 +14,20 @@ var _react2 = _interopRequireDefault(_react);
 exports['default'] = _react2['default'].createClass({
 	displayName: 'contacts',
 
+	extractData: function extractData(data) {
+
+		return _react2['default'].createElement(
+			'div',
+			{ key: data.id },
+			_react2['default'].createElement(
+				'h4',
+				null,
+				data.firstName,
+				' ',
+				data.lastName
+			)
+		);
+	},
 	render: function render() {
 		return _react2['default'].createElement(
 			'div',
@@ -24,9 +38,9 @@ exports['default'] = _react2['default'].createClass({
 				'Contacts'
 			),
 			_react2['default'].createElement(
-				'h3',
+				'h4',
 				null,
-				this.props.contacts[0].user01.firstName
+				this.props.contacts.map(this.extractData)
 			)
 		);
 	}
@@ -57,6 +71,7 @@ _firebase2['default'].initializeApp(config);
 
 function writeUserData(userId, firstName, lastName, email, telephone) {
   _firebase2['default'].database().ref('users/' + userId).set({
+    id: userId,
     firstName: firstName,
     lastName: lastName,
     email: email,
@@ -67,6 +82,8 @@ function writeUserData(userId, firstName, lastName, email, telephone) {
 writeUserData('user01', 'Joe', 'Rivers', 'joelab@hotmail.com', '515-324-6756');
 writeUserData('user02', 'James', 'King', 'jameslab@hotmail.com', '515-324-9956');
 writeUserData('user03', 'Sam', 'Wally', 'samlab@hotmail.com', '515-324-1946');
+writeUserData('user04', 'Marcia', 'Soldat', 'marcialab@hotmail.com', '515-324-1666');
+writeUserData('user05', 'Mark', 'Soldat', 'marklab@hotmail.com', '515-324-1229');
 
 var ref = _firebase2['default'].database().ref('users/').on('value', function (snapshot) {
   // console.log(snapshot.val());
@@ -74,7 +91,7 @@ var ref = _firebase2['default'].database().ref('users/').on('value', function (s
   var dataArr = [];
 
   for (var prop in data) {
-    dataArr.push(data);
+    dataArr.push(data[prop]);
   }
   // console.log(dataArr);
   // let user01 = data.user01;
@@ -146,7 +163,7 @@ var Router = _backbone2['default'].Router.extend({
 	showContacts: function showContacts() {
 
 		var contacts = this.data;
-		console.log(contacts);
+		// console.log(contacts);
 
 		this.render(_react2['default'].createElement(
 			'div',

@@ -16,7 +16,6 @@ initialize: function(appElement, data) {
 	this.el = appElement;
 	
 	this.data = data;
-
 },
 
 start: function() {
@@ -29,7 +28,7 @@ render: function(component) {
 showContacts: function() {
 
 	var contacts = this.data;
-	console.log(contacts);
+	// console.log(contacts);
 	
 	this.render(
 	<div>

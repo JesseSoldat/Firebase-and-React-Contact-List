@@ -4,12 +4,14 @@ import ReactDom from 'react-dom';
 import firebase from 'firebase';
 
 import Contacts from './components/contacts';
+import Details from './components/details';
 
 
 let Router = Backbone.Router.extend({
 
 routes: {
-	'' : 'showContacts'
+	'' : 'showContacts',
+	'details/:id' : 'showDetails'
 },
 
 initialize: function(appElement, data) {
@@ -24,6 +26,11 @@ start: function() {
 render: function(component) {
     ReactDom.render(component, this.el);
 },
+goto(route) {
+	this.navigate(route, {
+		trigger: true
+	});
+},
 
 showContacts: function() {
 
@@ -32,10 +39,21 @@ showContacts: function() {
 	
 	this.render(
 	<div>
-		<Contacts contacts={contacts} />
+		<Contacts 
+		contacts={contacts} 
+		details={(id) => this.goto('details/'+id)}/>
 	</div>
 	);
 	
+},
+showDetails: function(id) {
+	console.log('showDetails: ' +id);
+
+	this.render(
+		<div>
+			<Details />
+		</div>
+		);
 }
 
 

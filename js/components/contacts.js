@@ -1,11 +1,15 @@
 import React from 'react';
 
 export default React.createClass({
+	details: function(id){
+		console.log(id);
+		this.props.details(id);
+	},
 	extractData: function(data){
 		
 		return(
 			<div key={data.id}>
-					<h4>{data.firstName} {data.lastName}</h4>
+					<h4 onClick={() => this.details(data.id)}>{data.firstName} {data.lastName}</h4>
 			</div>
 			);
 	},

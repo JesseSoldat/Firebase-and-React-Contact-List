@@ -1,7 +1,14 @@
-import $ from 'jquery';
+
 import firebase from 'firebase';
 
-var appElement = $('.app');
+import Router from './router';
+
+let appElement = document.querySelector('.app');
+
+
+new Router(appElement).start();;
+
+
 
  var config = {
     apiKey: "AIzaSyCWfPHBoLxrwJewP95yJ0VdysfDLTiOK-k",
@@ -22,10 +29,4 @@ function writeUserData(userId, firstName, lastName, email, telephone) {
 
 writeUserData('01', 'Joe','Rivers', 'joelab@hotmail.com', '515-324-6756');
 
-// function writeUserData(userId, name, email) {
-//   firebase.database().ref('users/' + userId).set({
-//     username: name,
-//     email: email
-//   });
-//   }
-//   writeUserData('03', 'Joe', 'joelab@hotmail.com');
+

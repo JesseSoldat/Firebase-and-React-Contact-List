@@ -18,7 +18,16 @@ exports['default'] = _react2['default'].createClass({
 		return _react2['default'].createElement(
 			'div',
 			null,
-			'Contacts'
+			_react2['default'].createElement(
+				'h1',
+				null,
+				'Contacts'
+			),
+			_react2['default'].createElement(
+				'h3',
+				null,
+				this.props.contacts[0].user01.firstName
+			)
 		);
 	}
 
@@ -38,10 +47,6 @@ var _router = require('./router');
 
 var _router2 = _interopRequireDefault(_router);
 
-var appElement = document.querySelector('.app');
-
-new _router2['default'](appElement).start();;
-
 var config = {
   apiKey: "AIzaSyCWfPHBoLxrwJewP95yJ0VdysfDLTiOK-k",
   authDomain: "reactcontactbook.firebaseapp.com",
@@ -59,7 +64,36 @@ function writeUserData(userId, firstName, lastName, email, telephone) {
   });
 }
 
-writeUserData('01', 'Joe', 'Rivers', 'joelab@hotmail.com', '515-324-6756');
+writeUserData('user01', 'Joe', 'Rivers', 'joelab@hotmail.com', '515-324-6756');
+writeUserData('user02', 'James', 'King', 'jameslab@hotmail.com', '515-324-9956');
+writeUserData('user03', 'Sam', 'Wally', 'samlab@hotmail.com', '515-324-1946');
+
+var ref = _firebase2['default'].database().ref('users/').on('value', function (snapshot) {
+  // console.log(snapshot.val());
+  var data = snapshot.val();
+  var dataArr = [];
+
+  for (var prop in data) {
+    dataArr.push(data);
+  }
+  // console.log(dataArr);
+  // let user01 = data.user01;
+  // console.log(user01);
+  // var root = document.getElementById('root');
+
+  // $.each(data, function(key, value) {
+  //   console.log(value);
+  //   email = value.email;
+  //   name = value.username;
+  // var li = document.createElement("li");
+  // var li = $("<li></lu>").text(name+": "+" "+email);
+  // var br = $("<br />");
+  // li.textContent = email;
+  // $(root).append(li, br);
+  // $(root).append(br);
+  var appElement = document.querySelector('.app');
+  new _router2['default'](appElement, dataArr).start();;
+});
 
 },{"./router":3,"firebase":6}],3:[function(require,module,exports){
 'use strict';
@@ -82,6 +116,10 @@ var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
+var _firebase = require('firebase');
+
+var _firebase2 = _interopRequireDefault(_firebase);
+
 var _componentsContacts = require('./components/contacts');
 
 var _componentsContacts2 = _interopRequireDefault(_componentsContacts);
@@ -92,8 +130,10 @@ var Router = _backbone2['default'].Router.extend({
 		'': 'showContacts'
 	},
 
-	initialize: function initialize(appElement) {
+	initialize: function initialize(appElement, data) {
 		this.el = appElement;
+
+		this.data = data;
 	},
 
 	start: function start() {
@@ -104,11 +144,14 @@ var Router = _backbone2['default'].Router.extend({
 	},
 
 	showContacts: function showContacts() {
-		console.log('showContacts');
+
+		var contacts = this.data;
+		console.log(contacts);
+
 		this.render(_react2['default'].createElement(
 			'div',
 			null,
-			_react2['default'].createElement(_componentsContacts2['default'], null)
+			_react2['default'].createElement(_componentsContacts2['default'], { contacts: contacts })
 		));
 	}
 
@@ -117,7 +160,7 @@ var Router = _backbone2['default'].Router.extend({
 exports['default'] = Router;
 module.exports = exports['default'];
 
-},{"./components/contacts":1,"backbone":4,"react":174,"react-dom":9}],4:[function(require,module,exports){
+},{"./components/contacts":1,"backbone":4,"firebase":6,"react":174,"react-dom":9}],4:[function(require,module,exports){
 (function (global){
 //     Backbone.js 1.3.3
 

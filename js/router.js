@@ -1,7 +1,10 @@
 import Backbone from 'backbone';
 import React from 'react';
 import ReactDom from 'react-dom';
+import firebase from 'firebase';
+
 import Contacts from './components/contacts';
+
 
 let Router = Backbone.Router.extend({
 
@@ -9,10 +12,11 @@ routes: {
 	'' : 'showContacts'
 },
 
-initialize: function(appElement) {
+initialize: function(appElement, data) {
 	this.el = appElement;
-
 	
+	this.data = data;
+
 },
 
 start: function() {
@@ -23,10 +27,13 @@ render: function(component) {
 },
 
 showContacts: function() {
-	console.log('showContacts');
+
+	var contacts = this.data;
+	console.log(contacts);
+	
 	this.render(
 	<div>
-		<Contacts />
+		<Contacts contacts={contacts} />
 	</div>
 	);
 	

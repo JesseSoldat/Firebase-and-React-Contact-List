@@ -2,7 +2,7 @@ import React from 'react';
 
 export default React.createClass({
 	details: function(id){
-		console.log(id);
+		// console.log(id);
 		this.props.details(id);
 	},
 	extractData: function(data){

@@ -47,11 +47,19 @@ showContacts: function() {
 	
 },
 showDetails: function(id) {
-	console.log('showDetails: ' +id);
+	var contacts = this.data;
+	var detail = contacts.filter(function(obj){
+
+		if(obj.id === id) {
+			return obj;
+		}
+		
+	});
+	
 
 	this.render(
 		<div>
-			<Details />
+			<Details detail={detail} contacts={() => this.goto('')} />
 		</div>
 		);
 }

@@ -2191,6 +2191,8 @@
   clip: auto; }
 
 body {
-  background: #e2ebf3; }
+  background: #e2ebf3;
+  width: 80%;
+  margin: 0 auto; }
 
 /*# sourceMappingURL=main.css.map */

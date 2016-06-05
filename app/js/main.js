@@ -15,7 +15,7 @@ exports['default'] = _react2['default'].createClass({
 	displayName: 'contacts',
 
 	details: function details(id) {
-		console.log(id);
+		// console.log(id);
 		this.props.details(id);
 	},
 	extractData: function extractData(data) {
@@ -56,30 +56,58 @@ exports['default'] = _react2['default'].createClass({
 module.exports = exports['default'];
 
 },{"react":175}],2:[function(require,module,exports){
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-exports['default'] = _react2['default'].createClass({
-	displayName: 'details',
+exports["default"] = _react2["default"].createClass({
+	displayName: "details",
 
+	contacts: function contacts() {
+		this.props.contacts();
+	},
 	render: function render() {
-		return _react2['default'].createElement(
-			'div',
+		var _this = this;
+
+		return _react2["default"].createElement(
+			"div",
 			null,
-			'DETAILS'
+			_react2["default"].createElement(
+				"h3",
+				null,
+				this.props.detail[0].firstName,
+				" ",
+				this.props.detail[0].lastName
+			),
+			_react2["default"].createElement(
+				"h4",
+				null,
+				this.props.detail[0].email
+			),
+			_react2["default"].createElement(
+				"h4",
+				null,
+				this.props.detail[0].telephone
+			),
+			_react2["default"].createElement(
+				"a",
+				{ href: "", onClick: function () {
+						return _this.contacts();
+					} },
+				"Back to Contacts"
+			)
 		);
 	}
 });
-module.exports = exports['default'];
+module.exports = exports["default"];
 
 },{"react":175}],3:[function(require,module,exports){
 'use strict';
@@ -220,12 +248,22 @@ var Router = _backbone2['default'].Router.extend({
 		));
 	},
 	showDetails: function showDetails(id) {
-		console.log('showDetails: ' + id);
+		var _this2 = this;
+
+		var contacts = this.data;
+		var detail = contacts.filter(function (obj) {
+
+			if (obj.id === id) {
+				return obj;
+			}
+		});
 
 		this.render(_react2['default'].createElement(
 			'div',
 			null,
-			_react2['default'].createElement(_componentsDetails2['default'], null)
+			_react2['default'].createElement(_componentsDetails2['default'], { detail: detail, contacts: function () {
+					return _this2.goto('');
+				} })
 		));
 	}
 
